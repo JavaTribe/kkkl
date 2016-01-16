@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.ModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.Module" >
+    <id column="module_modu_id" property="moduId" jdbcType="INTEGER" />
+    <result column="module_pamo_id" property="pamoId" jdbcType="INTEGER" />
+    <result column="module_modu_name" property="moduName" jdbcType="VARCHAR" />
+    <result column="module_modu_describe" property="moduDescribe" jdbcType="VARCHAR" />
+    <result column="module_modu_url" property="moduUrl" jdbcType="VARCHAR" />
+    <result column="module_modu_icon" property="moduIcon" jdbcType="VARCHAR" />
+    <result column="module_modu_resource" property="moduResource" jdbcType="VARCHAR" />
+    <result column="module_modu_modify_date" property="moduModifyDate" jdbcType="TIMESTAMP" />
+    <result column="module_modu_create_date" property="moduCreateDate" jdbcType="TIMESTAMP" />
+    <result column="module_modu_sort" property="moduSort" jdbcType="TINYINT" />
+    <result column="module_modu_use_status" property="moduUseStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    module.modu_id as module_modu_id, module.pamo_id as module_pamo_id, module.modu_name as module_modu_name, 
+    module.modu_describe as module_modu_describe, module.modu_url as module_modu_url, 
+    module.modu_icon as module_modu_icon, module.modu_resource as module_modu_resource, 
+    module.modu_modify_date as module_modu_modify_date, module.modu_create_date as module_modu_create_date, 
+    module.modu_sort as module_modu_sort, module.modu_use_status as module_modu_use_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from module module
+    where module.modu_id = #{moduId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from module
+    where modu_id = #{moduId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.Module" >
+    <selectKey resultType="java.lang.Integer" keyProperty="moduId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into module (pamo_id, modu_name, modu_describe, 
+      modu_url, modu_icon, modu_resource, 
+      modu_modify_date, modu_create_date, modu_sort, 
+      modu_use_status)
+    values (#{pamoId,jdbcType=INTEGER}, #{moduName,jdbcType=VARCHAR}, #{moduDescribe,jdbcType=VARCHAR}, 
+      #{moduUrl,jdbcType=VARCHAR}, #{moduIcon,jdbcType=VARCHAR}, #{moduResource,jdbcType=VARCHAR}, 
+      #{moduModifyDate,jdbcType=TIMESTAMP}, #{moduCreateDate,jdbcType=TIMESTAMP}, #{moduSort,jdbcType=TINYINT}, 
+      #{moduUseStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.Module" >
+    <selectKey resultType="java.lang.Integer" keyProperty="moduId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pamoId != null" >
+        pamo_id,
+      </if>
+      <if test="moduName != null" >
+        modu_name,
+      </if>
+      <if test="moduDescribe != null" >
+        modu_describe,
+      </if>
+      <if test="moduUrl != null" >
+        modu_url,
+      </if>
+      <if test="moduIcon != null" >
+        modu_icon,
+      </if>
+      <if test="moduResource != null" >
+        modu_resource,
+      </if>
+      <if test="moduModifyDate != null" >
+        modu_modify_date,
+      </if>
+      <if test="moduCreateDate != null" >
+        modu_create_date,
+      </if>
+      <if test="moduSort != null" >
+        modu_sort,
+      </if>
+      <if test="moduUseStatus != null" >
+        modu_use_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pamoId != null" >
+        #{pamoId,jdbcType=INTEGER},
+      </if>
+      <if test="moduName != null" >
+        #{moduName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduDescribe != null" >
+        #{moduDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="moduUrl != null" >
+        #{moduUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="moduIcon != null" >
+        #{moduIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="moduResource != null" >
+        #{moduResource,jdbcType=VARCHAR},
+      </if>
+      <if test="moduModifyDate != null" >
+        #{moduModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduCreateDate != null" >
+        #{moduCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduSort != null" >
+        #{moduSort,jdbcType=TINYINT},
+      </if>
+      <if test="moduUseStatus != null" >
+        #{moduUseStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.Module" >
+    update module
+    <set >
+      <if test="pamoId != null" >
+        pamo_id = #{pamoId,jdbcType=INTEGER},
+      </if>
+      <if test="moduName != null" >
+        modu_name = #{moduName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduDescribe != null" >
+        modu_describe = #{moduDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="moduUrl != null" >
+        modu_url = #{moduUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="moduIcon != null" >
+        modu_icon = #{moduIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="moduResource != null" >
+        modu_resource = #{moduResource,jdbcType=VARCHAR},
+      </if>
+      <if test="moduModifyDate != null" >
+        modu_modify_date = #{moduModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduCreateDate != null" >
+        modu_create_date = #{moduCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduSort != null" >
+        modu_sort = #{moduSort,jdbcType=TINYINT},
+      </if>
+      <if test="moduUseStatus != null" >
+        modu_use_status = #{moduUseStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where modu_id = #{moduId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.Module" >
+    update module
+    set pamo_id = #{pamoId,jdbcType=INTEGER},
+      modu_name = #{moduName,jdbcType=VARCHAR},
+      modu_describe = #{moduDescribe,jdbcType=VARCHAR},
+      modu_url = #{moduUrl,jdbcType=VARCHAR},
+      modu_icon = #{moduIcon,jdbcType=VARCHAR},
+      modu_resource = #{moduResource,jdbcType=VARCHAR},
+      modu_modify_date = #{moduModifyDate,jdbcType=TIMESTAMP},
+      modu_create_date = #{moduCreateDate,jdbcType=TIMESTAMP},
+      modu_sort = #{moduSort,jdbcType=TINYINT},
+      modu_use_status = #{moduUseStatus,jdbcType=TINYINT}
+    where modu_id = #{moduId,jdbcType=INTEGER}
+  </update>
+</mapper>

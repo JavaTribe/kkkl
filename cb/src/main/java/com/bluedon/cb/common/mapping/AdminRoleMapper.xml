@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.AdminRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.AdminRole" >
+    <id column="admin_role_adro_id" property="adroId" jdbcType="INTEGER" />
+    <result column="admin_role_admi_id" property="admiId" jdbcType="INTEGER" />
+    <result column="admin_role_role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="admin_role_adro_modify_date" property="adroModifyDate" jdbcType="TIMESTAMP" />
+    <result column="admin_role_adro_create_date" property="adroCreateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    admin_role.adro_id as admin_role_adro_id, admin_role.admi_id as admin_role_admi_id, 
+    admin_role.role_id as admin_role_role_id, admin_role.adro_modify_date as admin_role_adro_modify_date, 
+    admin_role.adro_create_date as admin_role_adro_create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_role admin_role
+    where admin_role.adro_id = #{adroId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin_role
+    where adro_id = #{adroId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.AdminRole" >
+    <selectKey resultType="java.lang.Integer" keyProperty="adroId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into admin_role (admi_id, role_id, adro_modify_date, 
+      adro_create_date)
+    values (#{admiId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{adroModifyDate,jdbcType=TIMESTAMP}, 
+      #{adroCreateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.AdminRole" >
+    <selectKey resultType="java.lang.Integer" keyProperty="adroId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into admin_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="admiId != null" >
+        admi_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="adroModifyDate != null" >
+        adro_modify_date,
+      </if>
+      <if test="adroCreateDate != null" >
+        adro_create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="admiId != null" >
+        #{admiId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="adroModifyDate != null" >
+        #{adroModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adroCreateDate != null" >
+        #{adroCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.AdminRole" >
+    update admin_role
+    <set >
+      <if test="admiId != null" >
+        admi_id = #{admiId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="adroModifyDate != null" >
+        adro_modify_date = #{adroModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adroCreateDate != null" >
+        adro_create_date = #{adroCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where adro_id = #{adroId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.AdminRole" >
+    update admin_role
+    set admi_id = #{admiId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      adro_modify_date = #{adroModifyDate,jdbcType=TIMESTAMP},
+      adro_create_date = #{adroCreateDate,jdbcType=TIMESTAMP}
+    where adro_id = #{adroId,jdbcType=INTEGER}
+  </update>
+</mapper>

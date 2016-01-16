@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.exmapper.ExAdministratorMapper">
+  	<sql id="Mini_Adminstrator_Column_List" >
+	    administrator.admi_id as administrator_admi_id, admi_account as administrator_admi_account, 
+	    admi_password as administrator_admi_password, admi_failure_count as administrator_admi_failure_count, 
+	    admi_credential_expired as administrator_admi_credential_expired, admi_account_expired as administrator_admi_account_expired, 
+	    admi_account_enable as administrator_admi_account_enable, admi_account_locked as administrator_admi_account_locked
+  	</sql>
+	
+	<select id="selectAdministratorByUsername" resultMap="com.bluedon.cb.common.mapper.AdministratorMapper.BaseResultMap">
+		SELECT
+		<include refid="Mini_Adminstrator_Column_List"/>
+		FROM administrator
+		WHERE administrator.admi_account_enable = 1
+		AND administrator.admi_account_locked = 1
+		AND administrator.admi_account_expired =1
+		AND administrator.admi_credential_expired = 1
+		AND administrator.admi_account = #{username,jdbcType=VARCHAR} 
+	</select>
+	
+</mapper>

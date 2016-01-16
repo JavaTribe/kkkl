@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.SystemLogMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.SystemLog" >
+    <id column="system_log_sylo_id" property="syloId" jdbcType="INTEGER" />
+    <result column="system_log_sylo_method" property="syloMethod" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_description" property="syloDescription" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_type" property="syloType" jdbcType="TINYINT" />
+    <result column="system_log_sylo_ip" property="syloIp" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_exception_code" property="syloExceptionCode" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_exception_detail" property="syloExceptionDetail" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_params" property="syloParams" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_usro_id" property="syloUsroId" jdbcType="INTEGER" />
+    <result column="system_log_sylo_usro_name" property="syloUsroName" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_role_name" property="syloRoleName" jdbcType="VARCHAR" />
+    <result column="system_log_sylo_create_date" property="syloCreateDate" jdbcType="TIMESTAMP" />
+    <result column="system_log_sylo_sql" property="syloSql" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    system_log.sylo_id as system_log_sylo_id, system_log.sylo_method as system_log_sylo_method, 
+    system_log.sylo_description as system_log_sylo_description, system_log.sylo_type as system_log_sylo_type, 
+    system_log.sylo_ip as system_log_sylo_ip, system_log.sylo_exception_code as system_log_sylo_exception_code, 
+    system_log.sylo_exception_detail as system_log_sylo_exception_detail, system_log.sylo_params as system_log_sylo_params, 
+    system_log.sylo_usro_id as system_log_sylo_usro_id, system_log.sylo_usro_name as system_log_sylo_usro_name, 
+    system_log.sylo_role_name as system_log_sylo_role_name, system_log.sylo_create_date as system_log_sylo_create_date, 
+    system_log.sylo_sql as system_log_sylo_sql
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_log system_log
+    where system_log.sylo_id = #{syloId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from system_log
+    where sylo_id = #{syloId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.SystemLog" >
+    <selectKey resultType="java.lang.Integer" keyProperty="syloId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_log (sylo_method, sylo_description, sylo_type, 
+      sylo_ip, sylo_exception_code, sylo_exception_detail, 
+      sylo_params, sylo_usro_id, sylo_usro_name, 
+      sylo_role_name, sylo_create_date, sylo_sql
+      )
+    values (#{syloMethod,jdbcType=VARCHAR}, #{syloDescription,jdbcType=VARCHAR}, #{syloType,jdbcType=TINYINT}, 
+      #{syloIp,jdbcType=VARCHAR}, #{syloExceptionCode,jdbcType=VARCHAR}, #{syloExceptionDetail,jdbcType=VARCHAR}, 
+      #{syloParams,jdbcType=VARCHAR}, #{syloUsroId,jdbcType=INTEGER}, #{syloUsroName,jdbcType=VARCHAR}, 
+      #{syloRoleName,jdbcType=VARCHAR}, #{syloCreateDate,jdbcType=TIMESTAMP}, #{syloSql,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.SystemLog" >
+    <selectKey resultType="java.lang.Integer" keyProperty="syloId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syloMethod != null" >
+        sylo_method,
+      </if>
+      <if test="syloDescription != null" >
+        sylo_description,
+      </if>
+      <if test="syloType != null" >
+        sylo_type,
+      </if>
+      <if test="syloIp != null" >
+        sylo_ip,
+      </if>
+      <if test="syloExceptionCode != null" >
+        sylo_exception_code,
+      </if>
+      <if test="syloExceptionDetail != null" >
+        sylo_exception_detail,
+      </if>
+      <if test="syloParams != null" >
+        sylo_params,
+      </if>
+      <if test="syloUsroId != null" >
+        sylo_usro_id,
+      </if>
+      <if test="syloUsroName != null" >
+        sylo_usro_name,
+      </if>
+      <if test="syloRoleName != null" >
+        sylo_role_name,
+      </if>
+      <if test="syloCreateDate != null" >
+        sylo_create_date,
+      </if>
+      <if test="syloSql != null" >
+        sylo_sql,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syloMethod != null" >
+        #{syloMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="syloDescription != null" >
+        #{syloDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="syloType != null" >
+        #{syloType,jdbcType=TINYINT},
+      </if>
+      <if test="syloIp != null" >
+        #{syloIp,jdbcType=VARCHAR},
+      </if>
+      <if test="syloExceptionCode != null" >
+        #{syloExceptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syloExceptionDetail != null" >
+        #{syloExceptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="syloParams != null" >
+        #{syloParams,jdbcType=VARCHAR},
+      </if>
+      <if test="syloUsroId != null" >
+        #{syloUsroId,jdbcType=INTEGER},
+      </if>
+      <if test="syloUsroName != null" >
+        #{syloUsroName,jdbcType=VARCHAR},
+      </if>
+      <if test="syloRoleName != null" >
+        #{syloRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="syloCreateDate != null" >
+        #{syloCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="syloSql != null" >
+        #{syloSql,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.SystemLog" >
+    update system_log
+    <set >
+      <if test="syloMethod != null" >
+        sylo_method = #{syloMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="syloDescription != null" >
+        sylo_description = #{syloDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="syloType != null" >
+        sylo_type = #{syloType,jdbcType=TINYINT},
+      </if>
+      <if test="syloIp != null" >
+        sylo_ip = #{syloIp,jdbcType=VARCHAR},
+      </if>
+      <if test="syloExceptionCode != null" >
+        sylo_exception_code = #{syloExceptionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="syloExceptionDetail != null" >
+        sylo_exception_detail = #{syloExceptionDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="syloParams != null" >
+        sylo_params = #{syloParams,jdbcType=VARCHAR},
+      </if>
+      <if test="syloUsroId != null" >
+        sylo_usro_id = #{syloUsroId,jdbcType=INTEGER},
+      </if>
+      <if test="syloUsroName != null" >
+        sylo_usro_name = #{syloUsroName,jdbcType=VARCHAR},
+      </if>
+      <if test="syloRoleName != null" >
+        sylo_role_name = #{syloRoleName,jdbcType=VARCHAR},
+      </if>
+      <if test="syloCreateDate != null" >
+        sylo_create_date = #{syloCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="syloSql != null" >
+        sylo_sql = #{syloSql,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sylo_id = #{syloId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.SystemLog" >
+    update system_log
+    set sylo_method = #{syloMethod,jdbcType=VARCHAR},
+      sylo_description = #{syloDescription,jdbcType=VARCHAR},
+      sylo_type = #{syloType,jdbcType=TINYINT},
+      sylo_ip = #{syloIp,jdbcType=VARCHAR},
+      sylo_exception_code = #{syloExceptionCode,jdbcType=VARCHAR},
+      sylo_exception_detail = #{syloExceptionDetail,jdbcType=VARCHAR},
+      sylo_params = #{syloParams,jdbcType=VARCHAR},
+      sylo_usro_id = #{syloUsroId,jdbcType=INTEGER},
+      sylo_usro_name = #{syloUsroName,jdbcType=VARCHAR},
+      sylo_role_name = #{syloRoleName,jdbcType=VARCHAR},
+      sylo_create_date = #{syloCreateDate,jdbcType=TIMESTAMP},
+      sylo_sql = #{syloSql,jdbcType=VARCHAR}
+    where sylo_id = #{syloId,jdbcType=INTEGER}
+  </update>
+</mapper>

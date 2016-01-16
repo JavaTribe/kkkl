@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.module.admin.mmapper.AdminModuleManageMapper">
+
+	 <select id="selectModuleList" resultType="java.util.Map">
+		SELECT module.modu_id,parent_module.pamo_id,
+		module.modu_name,module.modu_url,module.modu_resource,
+		module.modu_sort,module.modu_use_status,
+		parent_module.pamo_name,parent_module.pamo_sort FROM module
+		INNER  JOIN parent_module ON module.pamo_id=parent_module.pamo_id
+		WHERE  1=1
+		<if test="moduName != null">
+			AND module.modu_name  LIKE CONCAT(CONCAT('%', #{moduName}),'%')
+		</if>
+		<if test="moduUrl != null">
+			AND module.modu_url  LIKE CONCAT(CONCAT('%', #{moduUrl}),'%')
+		</if>
+		<if test="moduResource != null">
+			AND module.modu_resource LIKE CONCAT(CONCAT('%', #{moduResource}),'%')
+		</if>
+		<if test="moduSort != null">
+			AND module.modu_sort = #{moduSort,jdbcType=TINYINT}
+		</if>
+		<if test="moduUseStatus != null">
+			AND module.modu_use_status = #{moduUseStatus,jdbcType=TINYINT}
+		</if>
+		<if test="pamoName != null">
+			AND parent_module.pamo_name LIKE CONCAT(CONCAT('%', #{pamoName}),'%')
+		</if>
+		ORDER BY  parent_module.pamo_sort ,module.modu_sort,modu_id ASC 
+	</select>
+	 
+	  <select id="selectParentModules" resultMap="com.bluedon.cb.common.mapper.ParentModuleMapper.BaseResultMap" >
+	    select 
+	    <include refid="com.bluedon.cb.common.mapper.ParentModuleMapper.Base_Column_List" />
+	    from parent_module parent_module
+	    where parent_module.pamo_use_status=1
+	  </select>
+	  
+</mapper>

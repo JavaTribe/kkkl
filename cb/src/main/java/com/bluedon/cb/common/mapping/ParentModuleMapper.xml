@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.ParentModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.ParentModule" >
+    <id column="parent_module_pamo_id" property="pamoId" jdbcType="INTEGER" />
+    <result column="parent_module_pamo_name" property="pamoName" jdbcType="VARCHAR" />
+    <result column="parent_module_pamo_describe" property="pamoDescribe" jdbcType="VARCHAR" />
+    <result column="parent_module_pamo_icon" property="pamoIcon" jdbcType="VARCHAR" />
+    <result column="parent_module_pamo_modify_date" property="pamoModifyDate" jdbcType="TIMESTAMP" />
+    <result column="parent_module_pamo_create_date" property="pamoCreateDate" jdbcType="TIMESTAMP" />
+    <result column="parent_module_pamo_sort" property="pamoSort" jdbcType="TINYINT" />
+    <result column="parent_module_pamo_use_status" property="pamoUseStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    parent_module.pamo_id as parent_module_pamo_id, parent_module.pamo_name as parent_module_pamo_name, 
+    parent_module.pamo_describe as parent_module_pamo_describe, parent_module.pamo_icon as parent_module_pamo_icon, 
+    parent_module.pamo_modify_date as parent_module_pamo_modify_date, parent_module.pamo_create_date as parent_module_pamo_create_date, 
+    parent_module.pamo_sort as parent_module_pamo_sort, parent_module.pamo_use_status as parent_module_pamo_use_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from parent_module parent_module
+    where parent_module.pamo_id = #{pamoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from parent_module
+    where pamo_id = #{pamoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.ParentModule" >
+    <selectKey resultType="java.lang.Integer" keyProperty="pamoId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into parent_module (pamo_name, pamo_describe, pamo_icon, 
+      pamo_modify_date, pamo_create_date, pamo_sort, 
+      pamo_use_status)
+    values (#{pamoName,jdbcType=VARCHAR}, #{pamoDescribe,jdbcType=VARCHAR}, #{pamoIcon,jdbcType=VARCHAR}, 
+      #{pamoModifyDate,jdbcType=TIMESTAMP}, #{pamoCreateDate,jdbcType=TIMESTAMP}, #{pamoSort,jdbcType=TINYINT}, 
+      #{pamoUseStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.ParentModule" >
+    <selectKey resultType="java.lang.Integer" keyProperty="pamoId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into parent_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pamoName != null" >
+        pamo_name,
+      </if>
+      <if test="pamoDescribe != null" >
+        pamo_describe,
+      </if>
+      <if test="pamoIcon != null" >
+        pamo_icon,
+      </if>
+      <if test="pamoModifyDate != null" >
+        pamo_modify_date,
+      </if>
+      <if test="pamoCreateDate != null" >
+        pamo_create_date,
+      </if>
+      <if test="pamoSort != null" >
+        pamo_sort,
+      </if>
+      <if test="pamoUseStatus != null" >
+        pamo_use_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pamoName != null" >
+        #{pamoName,jdbcType=VARCHAR},
+      </if>
+      <if test="pamoDescribe != null" >
+        #{pamoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="pamoIcon != null" >
+        #{pamoIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="pamoModifyDate != null" >
+        #{pamoModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pamoCreateDate != null" >
+        #{pamoCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pamoSort != null" >
+        #{pamoSort,jdbcType=TINYINT},
+      </if>
+      <if test="pamoUseStatus != null" >
+        #{pamoUseStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.ParentModule" >
+    update parent_module
+    <set >
+      <if test="pamoName != null" >
+        pamo_name = #{pamoName,jdbcType=VARCHAR},
+      </if>
+      <if test="pamoDescribe != null" >
+        pamo_describe = #{pamoDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="pamoIcon != null" >
+        pamo_icon = #{pamoIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="pamoModifyDate != null" >
+        pamo_modify_date = #{pamoModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pamoCreateDate != null" >
+        pamo_create_date = #{pamoCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pamoSort != null" >
+        pamo_sort = #{pamoSort,jdbcType=TINYINT},
+      </if>
+      <if test="pamoUseStatus != null" >
+        pamo_use_status = #{pamoUseStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where pamo_id = #{pamoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.ParentModule" >
+    update parent_module
+    set pamo_name = #{pamoName,jdbcType=VARCHAR},
+      pamo_describe = #{pamoDescribe,jdbcType=VARCHAR},
+      pamo_icon = #{pamoIcon,jdbcType=VARCHAR},
+      pamo_modify_date = #{pamoModifyDate,jdbcType=TIMESTAMP},
+      pamo_create_date = #{pamoCreateDate,jdbcType=TIMESTAMP},
+      pamo_sort = #{pamoSort,jdbcType=TINYINT},
+      pamo_use_status = #{pamoUseStatus,jdbcType=TINYINT}
+    where pamo_id = #{pamoId,jdbcType=INTEGER}
+  </update>
+</mapper>

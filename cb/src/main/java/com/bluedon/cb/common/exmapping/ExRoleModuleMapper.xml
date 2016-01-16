@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.exmapper.ExRoleModuleMapper">
+
+	<resultMap id="RoleModuleResultMap" type="com.bluedon.cb.common.entity.RoleModule" >
+	    <id column="role_module_romo_id" property="romoId" jdbcType="INTEGER" />
+	    <result column="role_module_modu_id" property="moduId" jdbcType="INTEGER" />
+	    <result column="role_module_role_id" property="roleId" jdbcType="INTEGER" />
+	    <result column="role_module_romo_modify_date" property="romoModifyDate" jdbcType="TIMESTAMP" />
+	    <result column="role_module_romo_create_date" property="romoCreateDate" jdbcType="TIMESTAMP" />
+	    <result column="modu_resource" property="exModuResource" jdbcType="VARCHAR" />
+    </resultMap>
+	<select id="selectRoleModuleByRoleId" resultMap="RoleModuleResultMap">
+		SELECT
+		<include refid="com.bluedon.cb.common.mapper.RoleModuleMapper.Base_Column_List"/>,
+		modu_resource
+		FROM role_module
+		INNER JOIN role
+		ON role_module.role_id = role.role_id
+		INNER JOIN module
+		ON role_module.modu_id = module.modu_id
+		WHERE role.role_id = #{roleId,jdbcType=INTEGER}
+	</select>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.module.admin.mmapper.AdminRoleManageMapper">
+
+	<resultMap type="com.bluedon.cb.common.entity.ParentModule" id="ParentModuleAllResultMap"  extends="com.bluedon.cb.common.mapper.ParentModuleMapper.BaseResultMap" >
+		<collection property="pamoModules" resultMap="com.bluedon.cb.common.mapper.ModuleMapper.BaseResultMap"></collection>
+	</resultMap>
+	<!-- End resultMap -->
+	
+	<select id="selectRoleList" resultMap="com.bluedon.cb.common.mapper.RoleMapper.BaseResultMap">
+		SELECT 
+		<include refid="com.bluedon.cb.common.mapper.RoleMapper.Base_Column_List"/> 
+		FROM role
+		WHERE  1=1
+		<if test="roleName != null">
+			AND role_name  LIKE CONCAT(CONCAT('%', #{roleName}),'%')
+		</if>
+		<if test="roleDescribe != null" >
+			AND role_describe  LIKE CONCAT(CONCAT('%', #{roleDescribe}),'%')
+		</if>
+		<if test="roleUseStatus != null" >
+			AND role_use_status = #{roleUseStatus,jdbcType=TINYINT},
+		</if>
+		 <if test="roleType != null" >
+			AND role_type = #{roleType,jdbcType=TINYINT}
+		</if>
+	</select>
+	
+	<select id="selectParentModuleAndModule" resultMap="ParentModuleAllResultMap">
+		SELECT 
+		<include refid="com.bluedon.cb.common.mapper.ParentModuleMapper.Base_Column_List"/>,
+		<include refid="com.bluedon.cb.common.mapper.ModuleMapper.Base_Column_List"/>
+		FROM parent_module 
+		INNER JOIN module ON parent_module.pamo_id=module.pamo_id
+		WHERE module.modu_use_status = 1 
+		AND parent_module.pamo_use_status = 1 
+		ORDER BY parent_module.pamo_sort ASC ,module.modu_sort ASC
+	</select>
+	
+	<select id="selectModuIdsByRoleId"  resultType="java.lang.Integer">
+		SELECT modu_id AS moduId
+		FROM role_module
+		WHERE role_id = #{roleId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- Start Insert -->
+	<insert id="insertRoleModules" useGeneratedKeys="true">
+		 INSERT INTO role_module
+			       ( modu_id,
+			        role_id,
+			        romo_create_date
+			       )
+			    values 
+				<foreach collection="moduIds" item="moduId" index="index"  separator="," >
+			    <trim prefix=" (" suffix=")" suffixOverrides="," >
+			      	#{moduId},
+			        #{roleId},
+			        #{romoCreateDate}
+			    </trim>
+		</foreach>
+	</insert>
+	
+	 <delete id="deleteRoleModuleByRoleId" parameterType="java.lang.Integer" >
+	    delete from role_module
+	    where role_id = #{roleId,jdbcType=INTEGER}
+	 </delete>
+	 
+</mapper>

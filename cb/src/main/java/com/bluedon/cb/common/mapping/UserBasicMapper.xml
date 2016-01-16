@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.UserBasicMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.UserBasic" >
+    <id column="user_basic_usba_id" property="usbaId" jdbcType="INTEGER" />
+    <result column="user_basic_depa_id" property="depaId" jdbcType="INTEGER" />
+    <result column="user_basic_usba_account" property="usbaAccount" jdbcType="VARCHAR" />
+    <result column="user_basic_usba_name" property="usbaName" jdbcType="VARCHAR" />
+    <result column="user_basic_usba_password" property="usbaPassword" jdbcType="VARCHAR" />
+    <result column="user_basic_usba_failure_count" property="usbaFailureCount" jdbcType="TINYINT" />
+    <result column="user_basic_usba_credential_expired" property="usbaCredentialExpired" jdbcType="TINYINT" />
+    <result column="user_basic_usba_account_expired" property="usbaAccountExpired" jdbcType="TINYINT" />
+    <result column="user_basic_usba_account_enable" property="usbaAccountEnable" jdbcType="TINYINT" />
+    <result column="user_basic_usba_account_locked" property="usbaAccountLocked" jdbcType="TINYINT" />
+    <result column="user_basic_usba_modify_date" property="usbaModifyDate" jdbcType="TIMESTAMP" />
+    <result column="user_basic_usba_create_date" property="usbaCreateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_basic.usba_id as user_basic_usba_id, user_basic.depa_id as user_basic_depa_id, 
+    user_basic.usba_account as user_basic_usba_account, user_basic.usba_name as user_basic_usba_name, 
+    user_basic.usba_password as user_basic_usba_password, user_basic.usba_failure_count as user_basic_usba_failure_count, 
+    user_basic.usba_credential_expired as user_basic_usba_credential_expired, user_basic.usba_account_expired as user_basic_usba_account_expired, 
+    user_basic.usba_account_enable as user_basic_usba_account_enable, user_basic.usba_account_locked as user_basic_usba_account_locked, 
+    user_basic.usba_modify_date as user_basic_usba_modify_date, user_basic.usba_create_date as user_basic_usba_create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_basic user_basic
+    where user_basic.usba_id = #{usbaId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_basic
+    where usba_id = #{usbaId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.UserBasic" >
+    <selectKey resultType="java.lang.Integer" keyProperty="usbaId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_basic (depa_id, usba_account, usba_name, 
+      usba_password, usba_failure_count, usba_credential_expired, 
+      usba_account_expired, usba_account_enable, 
+      usba_account_locked, usba_modify_date, usba_create_date
+      )
+    values (#{depaId,jdbcType=INTEGER}, #{usbaAccount,jdbcType=VARCHAR}, #{usbaName,jdbcType=VARCHAR}, 
+      #{usbaPassword,jdbcType=VARCHAR}, #{usbaFailureCount,jdbcType=TINYINT}, #{usbaCredentialExpired,jdbcType=TINYINT}, 
+      #{usbaAccountExpired,jdbcType=TINYINT}, #{usbaAccountEnable,jdbcType=TINYINT}, 
+      #{usbaAccountLocked,jdbcType=TINYINT}, #{usbaModifyDate,jdbcType=TIMESTAMP}, #{usbaCreateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.UserBasic" >
+    <selectKey resultType="java.lang.Integer" keyProperty="usbaId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="depaId != null" >
+        depa_id,
+      </if>
+      <if test="usbaAccount != null" >
+        usba_account,
+      </if>
+      <if test="usbaName != null" >
+        usba_name,
+      </if>
+      <if test="usbaPassword != null" >
+        usba_password,
+      </if>
+      <if test="usbaFailureCount != null" >
+        usba_failure_count,
+      </if>
+      <if test="usbaCredentialExpired != null" >
+        usba_credential_expired,
+      </if>
+      <if test="usbaAccountExpired != null" >
+        usba_account_expired,
+      </if>
+      <if test="usbaAccountEnable != null" >
+        usba_account_enable,
+      </if>
+      <if test="usbaAccountLocked != null" >
+        usba_account_locked,
+      </if>
+      <if test="usbaModifyDate != null" >
+        usba_modify_date,
+      </if>
+      <if test="usbaCreateDate != null" >
+        usba_create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="depaId != null" >
+        #{depaId,jdbcType=INTEGER},
+      </if>
+      <if test="usbaAccount != null" >
+        #{usbaAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="usbaName != null" >
+        #{usbaName,jdbcType=VARCHAR},
+      </if>
+      <if test="usbaPassword != null" >
+        #{usbaPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usbaFailureCount != null" >
+        #{usbaFailureCount,jdbcType=TINYINT},
+      </if>
+      <if test="usbaCredentialExpired != null" >
+        #{usbaCredentialExpired,jdbcType=TINYINT},
+      </if>
+      <if test="usbaAccountExpired != null" >
+        #{usbaAccountExpired,jdbcType=TINYINT},
+      </if>
+      <if test="usbaAccountEnable != null" >
+        #{usbaAccountEnable,jdbcType=TINYINT},
+      </if>
+      <if test="usbaAccountLocked != null" >
+        #{usbaAccountLocked,jdbcType=TINYINT},
+      </if>
+      <if test="usbaModifyDate != null" >
+        #{usbaModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usbaCreateDate != null" >
+        #{usbaCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.UserBasic" >
+    update user_basic
+    <set >
+      <if test="depaId != null" >
+        depa_id = #{depaId,jdbcType=INTEGER},
+      </if>
+      <if test="usbaAccount != null" >
+        usba_account = #{usbaAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="usbaName != null" >
+        usba_name = #{usbaName,jdbcType=VARCHAR},
+      </if>
+      <if test="usbaPassword != null" >
+        usba_password = #{usbaPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usbaFailureCount != null" >
+        usba_failure_count = #{usbaFailureCount,jdbcType=TINYINT},
+      </if>
+      <if test="usbaCredentialExpired != null" >
+        usba_credential_expired = #{usbaCredentialExpired,jdbcType=TINYINT},
+      </if>
+      <if test="usbaAccountExpired != null" >
+        usba_account_expired = #{usbaAccountExpired,jdbcType=TINYINT},
+      </if>
+      <if test="usbaAccountEnable != null" >
+        usba_account_enable = #{usbaAccountEnable,jdbcType=TINYINT},
+      </if>
+      <if test="usbaAccountLocked != null" >
+        usba_account_locked = #{usbaAccountLocked,jdbcType=TINYINT},
+      </if>
+      <if test="usbaModifyDate != null" >
+        usba_modify_date = #{usbaModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usbaCreateDate != null" >
+        usba_create_date = #{usbaCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where usba_id = #{usbaId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.UserBasic" >
+    update user_basic
+    set depa_id = #{depaId,jdbcType=INTEGER},
+      usba_account = #{usbaAccount,jdbcType=VARCHAR},
+      usba_name = #{usbaName,jdbcType=VARCHAR},
+      usba_password = #{usbaPassword,jdbcType=VARCHAR},
+      usba_failure_count = #{usbaFailureCount,jdbcType=TINYINT},
+      usba_credential_expired = #{usbaCredentialExpired,jdbcType=TINYINT},
+      usba_account_expired = #{usbaAccountExpired,jdbcType=TINYINT},
+      usba_account_enable = #{usbaAccountEnable,jdbcType=TINYINT},
+      usba_account_locked = #{usbaAccountLocked,jdbcType=TINYINT},
+      usba_modify_date = #{usbaModifyDate,jdbcType=TIMESTAMP},
+      usba_create_date = #{usbaCreateDate,jdbcType=TIMESTAMP}
+    where usba_id = #{usbaId,jdbcType=INTEGER}
+  </update>
+</mapper>

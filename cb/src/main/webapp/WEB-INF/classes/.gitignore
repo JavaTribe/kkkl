@@ -1,0 +1,6 @@
+/application.properties
+/ehcache.xml
+/logback.xml
+/mybatis-config.xml
+/spring/
+/stencilset.json

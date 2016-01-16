@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.exmapper.ExParentModuleMapper">
+	<!-- Begin resultMap -->
+	<resultMap type="com.bluedon.cb.common.entity.ParentModule" id="ParentModuleAllResultMap"  extends="com.bluedon.cb.common.mapper.ParentModuleMapper.BaseResultMap" >
+		<collection property="pamoModules" resultMap="com.bluedon.cb.common.mapper.ModuleMapper.BaseResultMap"></collection>
+	</resultMap>
+	<!-- End resultMap -->
+	
+	<select id="selectParentModuleByRoleId" resultMap="ParentModuleAllResultMap">
+		SELECT 
+		<include refid="com.bluedon.cb.common.mapper.ParentModuleMapper.Base_Column_List"/>,
+		<include refid="com.bluedon.cb.common.mapper.ModuleMapper.Base_Column_List"/>
+		FROM parent_module 
+		INNER JOIN module ON parent_module.pamo_id=module.pamo_id
+		INNER JOIN role_module ON module.modu_id = role_module.modu_id 
+		INNER JOIN role ON role_module.role_id = role.role_id 
+		AND module.modu_use_status = 1 
+		AND parent_module.pamo_use_status = 1
+		AND role.role_use_status = 1 
+		AND role.role_id=#{roleId,jdbcType=INTEGER}
+		ORDER BY parent_module.pamo_sort ASC ,module.modu_sort ASC
+	</select>
+	
+</mapper>

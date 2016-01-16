@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	<!-- <http auto-config="true"></http> -->
+	<!-- 不需要进行认证的资源，3.0之后才改为这样配置 -->
+	<!-- <http security="none" pattern="/**/index" /> -->
+ 	<http security="none" pattern="/**/*login.html" />
+	<http security="none" pattern="/**/*.jpg" />
+	<http security="none" pattern="/**/*.png" />
+	<http security="none" pattern="/**/*.gif" />
+	<http security="none" pattern="/**/*.css" />
+	<http security="none" pattern="/**/*.js" />
+	<http security="none" pattern="/*.ico" />
+	<http security="none" pattern="/*.jpg" />
+
+
+	
+	<!--设置匹配普通用户url，登录页面和所拥有的权限，以及引用userAuthManager验证管理 -->
+ 	<http auto-config="true" pattern="/user/**" use-expressions="true" authentication-manager-ref="userAuthManager">
+		<form-login login-processing-url="/user/j_spring_security_check" login-page="/" 
+		authentication-failure-url="/usernameCheckFailed"  default-target-url="/user/login/userCheckSuccess"
+		always-use-default-target="true"/>
+		<logout logout-url="/user/j_spring_security_logout" logout-success-url="/" />
+        <intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+	</http>
+	
+	<!--设置匹配管理员用户url，登录页面和所拥有的权限，以及引用adminAuthManager验证管理 -->
+ 	<http auto-config="true" pattern="/admin/**" use-expressions="true" authentication-manager-ref="adminAuthManager">
+		<form-login login-processing-url="/admin/j_spring_security_check" login-page="/admin_login.html" 
+		authentication-failure-url="/usernameCheckFailed"  default-target-url="/admin/login/adminCheckSuccess"
+		always-use-default-target="true"/>
+		<logout logout-url="/admin/j_spring_security_logout" logout-success-url="/admin_login.html" />
+		<intercept-url pattern="/admin/department/**" access="hasRole('ROLE_ADMIN_DEPARTMENT')" />
+		<intercept-url pattern="/admin/processdefinition/**" access="hasRole('ROLE_ADMIN_PROCESSDEFINITION')" />
+		<intercept-url pattern="/admin/roleManage/**" access="hasRole('ROLE_ADMIN_ROLEMANAGE')" />
+		<intercept-url pattern="/admin/moduleManage/**" access="hasRole('ROLE_ADMIN_MODULEMANAGE')" />
+		<intercept-url pattern="/admin/parentModuleManage/**" access="hasRole('ROLE_ADMIN_PARENTMODULEMANAGE')" />
+		<intercept-url pattern="/admin/manageUserAccount/**" access="hasRole('ROLE_ADMIN_MANAGEUSERACCOUNT')" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+	</http>
+
+	<!--普通用户管理用户验证管理bean -->
+	<authentication-manager id="userAuthManager">
+		<authentication-provider user-service-ref="userDetailService">
+			<password-encoder hash="md5"></password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<!--后台管理用户验证管理bean -->
+	<authentication-manager id="adminAuthManager">
+		<authentication-provider user-service-ref="adminDetailService">
+			<password-encoder hash="md5"></password-encoder>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:beans>

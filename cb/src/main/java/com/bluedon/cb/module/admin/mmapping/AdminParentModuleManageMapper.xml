@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.module.admin.mmapper.AdminParentModuleManageMapper">
+
+	 <select id="selectParentModuleList" resultType="java.util.Map">
+		SELECT pamo_id,pamo_name,pamo_describe,
+		pamo_sort,pamo_use_status,pamo_icon
+		FROM parent_module
+		WHERE  1=1
+		<if test="pamoName != null">
+			AND parent_module.pamo_name  LIKE CONCAT(CONCAT('%', #{pamoName}),'%')
+		</if>
+		<if test="pamoDescribe != null">
+			AND parent_module.pamo_describe  LIKE CONCAT(CONCAT('%', #{pamoDescribe}),'%')
+		</if>
+		<if test="pamoIcon != null">
+			AND parent_module.pamo_icon  LIKE CONCAT(CONCAT('%', #{pamoIcon}),'%')
+		</if>
+		<if test="pamoSort != null">
+			AND parent_module.pamo_sort  = #{pamoSort,jdbcType=TINYINT}
+		</if>
+		<if test="pamoUseStatus != null">
+			AND parent_module.pamo_use_status = #{pamoUseStatus,jdbcType=TINYINT}
+		</if>
+		ORDER BY  parent_module.pamo_sort ,pamo_id ASC 
+	</select>
+	 
+</mapper>

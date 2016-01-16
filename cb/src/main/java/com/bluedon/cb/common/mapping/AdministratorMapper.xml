@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.AdministratorMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.Administrator" >
+    <id column="administrator_admi_id" property="admiId" jdbcType="INTEGER" />
+    <result column="administrator_admi_account" property="admiAccount" jdbcType="VARCHAR" />
+    <result column="administrator_admi_name" property="admiName" jdbcType="VARCHAR" />
+    <result column="administrator_admi_password" property="admiPassword" jdbcType="CHAR" />
+    <result column="administrator_admi_mail" property="admiMail" jdbcType="VARCHAR" />
+    <result column="administrator_admi_failure_count" property="admiFailureCount" jdbcType="VARCHAR" />
+    <result column="administrator_admi_credential_expired" property="admiCredentialExpired" jdbcType="TINYINT" />
+    <result column="administrator_admi_account_expired" property="admiAccountExpired" jdbcType="TINYINT" />
+    <result column="administrator_admi_account_enable" property="admiAccountEnable" jdbcType="TINYINT" />
+    <result column="administrator_admi_account_locked" property="admiAccountLocked" jdbcType="TINYINT" />
+    <result column="administrator_admi_modify_date" property="admiModifyDate" jdbcType="TIMESTAMP" />
+    <result column="administrator_admi_create_date" property="admiCreateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    administrator.admi_id as administrator_admi_id, administrator.admi_account as administrator_admi_account, 
+    administrator.admi_name as administrator_admi_name, administrator.admi_password as administrator_admi_password, 
+    administrator.admi_mail as administrator_admi_mail, administrator.admi_failure_count as administrator_admi_failure_count, 
+    administrator.admi_credential_expired as administrator_admi_credential_expired, administrator.admi_account_expired as administrator_admi_account_expired, 
+    administrator.admi_account_enable as administrator_admi_account_enable, administrator.admi_account_locked as administrator_admi_account_locked, 
+    administrator.admi_modify_date as administrator_admi_modify_date, administrator.admi_create_date as administrator_admi_create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from administrator administrator
+    where administrator.admi_id = #{admiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from administrator
+    where admi_id = #{admiId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.Administrator" >
+    <selectKey resultType="java.lang.Integer" keyProperty="admiId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into administrator (admi_account, admi_name, admi_password, 
+      admi_mail, admi_failure_count, admi_credential_expired, 
+      admi_account_expired, admi_account_enable, 
+      admi_account_locked, admi_modify_date, admi_create_date
+      )
+    values (#{admiAccount,jdbcType=VARCHAR}, #{admiName,jdbcType=VARCHAR}, #{admiPassword,jdbcType=CHAR}, 
+      #{admiMail,jdbcType=VARCHAR}, #{admiFailureCount,jdbcType=VARCHAR}, #{admiCredentialExpired,jdbcType=TINYINT}, 
+      #{admiAccountExpired,jdbcType=TINYINT}, #{admiAccountEnable,jdbcType=TINYINT}, 
+      #{admiAccountLocked,jdbcType=TINYINT}, #{admiModifyDate,jdbcType=TIMESTAMP}, #{admiCreateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.Administrator" >
+    <selectKey resultType="java.lang.Integer" keyProperty="admiId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into administrator
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="admiAccount != null" >
+        admi_account,
+      </if>
+      <if test="admiName != null" >
+        admi_name,
+      </if>
+      <if test="admiPassword != null" >
+        admi_password,
+      </if>
+      <if test="admiMail != null" >
+        admi_mail,
+      </if>
+      <if test="admiFailureCount != null" >
+        admi_failure_count,
+      </if>
+      <if test="admiCredentialExpired != null" >
+        admi_credential_expired,
+      </if>
+      <if test="admiAccountExpired != null" >
+        admi_account_expired,
+      </if>
+      <if test="admiAccountEnable != null" >
+        admi_account_enable,
+      </if>
+      <if test="admiAccountLocked != null" >
+        admi_account_locked,
+      </if>
+      <if test="admiModifyDate != null" >
+        admi_modify_date,
+      </if>
+      <if test="admiCreateDate != null" >
+        admi_create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="admiAccount != null" >
+        #{admiAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="admiName != null" >
+        #{admiName,jdbcType=VARCHAR},
+      </if>
+      <if test="admiPassword != null" >
+        #{admiPassword,jdbcType=CHAR},
+      </if>
+      <if test="admiMail != null" >
+        #{admiMail,jdbcType=VARCHAR},
+      </if>
+      <if test="admiFailureCount != null" >
+        #{admiFailureCount,jdbcType=VARCHAR},
+      </if>
+      <if test="admiCredentialExpired != null" >
+        #{admiCredentialExpired,jdbcType=TINYINT},
+      </if>
+      <if test="admiAccountExpired != null" >
+        #{admiAccountExpired,jdbcType=TINYINT},
+      </if>
+      <if test="admiAccountEnable != null" >
+        #{admiAccountEnable,jdbcType=TINYINT},
+      </if>
+      <if test="admiAccountLocked != null" >
+        #{admiAccountLocked,jdbcType=TINYINT},
+      </if>
+      <if test="admiModifyDate != null" >
+        #{admiModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admiCreateDate != null" >
+        #{admiCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.Administrator" >
+    update administrator
+    <set >
+      <if test="admiAccount != null" >
+        admi_account = #{admiAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="admiName != null" >
+        admi_name = #{admiName,jdbcType=VARCHAR},
+      </if>
+      <if test="admiPassword != null" >
+        admi_password = #{admiPassword,jdbcType=CHAR},
+      </if>
+      <if test="admiMail != null" >
+        admi_mail = #{admiMail,jdbcType=VARCHAR},
+      </if>
+      <if test="admiFailureCount != null" >
+        admi_failure_count = #{admiFailureCount,jdbcType=VARCHAR},
+      </if>
+      <if test="admiCredentialExpired != null" >
+        admi_credential_expired = #{admiCredentialExpired,jdbcType=TINYINT},
+      </if>
+      <if test="admiAccountExpired != null" >
+        admi_account_expired = #{admiAccountExpired,jdbcType=TINYINT},
+      </if>
+      <if test="admiAccountEnable != null" >
+        admi_account_enable = #{admiAccountEnable,jdbcType=TINYINT},
+      </if>
+      <if test="admiAccountLocked != null" >
+        admi_account_locked = #{admiAccountLocked,jdbcType=TINYINT},
+      </if>
+      <if test="admiModifyDate != null" >
+        admi_modify_date = #{admiModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admiCreateDate != null" >
+        admi_create_date = #{admiCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where admi_id = #{admiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.Administrator" >
+    update administrator
+    set admi_account = #{admiAccount,jdbcType=VARCHAR},
+      admi_name = #{admiName,jdbcType=VARCHAR},
+      admi_password = #{admiPassword,jdbcType=CHAR},
+      admi_mail = #{admiMail,jdbcType=VARCHAR},
+      admi_failure_count = #{admiFailureCount,jdbcType=VARCHAR},
+      admi_credential_expired = #{admiCredentialExpired,jdbcType=TINYINT},
+      admi_account_expired = #{admiAccountExpired,jdbcType=TINYINT},
+      admi_account_enable = #{admiAccountEnable,jdbcType=TINYINT},
+      admi_account_locked = #{admiAccountLocked,jdbcType=TINYINT},
+      admi_modify_date = #{admiModifyDate,jdbcType=TIMESTAMP},
+      admi_create_date = #{admiCreateDate,jdbcType=TIMESTAMP}
+    where admi_id = #{admiId,jdbcType=INTEGER}
+  </update>
+</mapper>

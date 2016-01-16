@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.RoleModuleMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.RoleModule" >
+    <id column="role_module_romo_id" property="romoId" jdbcType="INTEGER" />
+    <result column="role_module_modu_id" property="moduId" jdbcType="INTEGER" />
+    <result column="role_module_role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_module_romo_modify_date" property="romoModifyDate" jdbcType="TIMESTAMP" />
+    <result column="role_module_romo_create_date" property="romoCreateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    role_module.romo_id as role_module_romo_id, role_module.modu_id as role_module_modu_id, 
+    role_module.role_id as role_module_role_id, role_module.romo_modify_date as role_module_romo_modify_date, 
+    role_module.romo_create_date as role_module_romo_create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_module role_module
+    where role_module.romo_id = #{romoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role_module
+    where romo_id = #{romoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.RoleModule" >
+    <selectKey resultType="java.lang.Integer" keyProperty="romoId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into role_module (modu_id, role_id, romo_modify_date, 
+      romo_create_date)
+    values (#{moduId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{romoModifyDate,jdbcType=TIMESTAMP}, 
+      #{romoCreateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.RoleModule" >
+    <selectKey resultType="java.lang.Integer" keyProperty="romoId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into role_module
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="moduId != null" >
+        modu_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="romoModifyDate != null" >
+        romo_modify_date,
+      </if>
+      <if test="romoCreateDate != null" >
+        romo_create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="moduId != null" >
+        #{moduId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="romoModifyDate != null" >
+        #{romoModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="romoCreateDate != null" >
+        #{romoCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.RoleModule" >
+    update role_module
+    <set >
+      <if test="moduId != null" >
+        modu_id = #{moduId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="romoModifyDate != null" >
+        romo_modify_date = #{romoModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="romoCreateDate != null" >
+        romo_create_date = #{romoCreateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where romo_id = #{romoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.RoleModule" >
+    update role_module
+    set modu_id = #{moduId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      romo_modify_date = #{romoModifyDate,jdbcType=TIMESTAMP},
+      romo_create_date = #{romoCreateDate,jdbcType=TIMESTAMP}
+    where romo_id = #{romoId,jdbcType=INTEGER}
+  </update>
+</mapper>

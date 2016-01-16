@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.UserRole" >
+    <id column="user_role_usro_id" property="usroId" jdbcType="INTEGER" />
+    <result column="user_role_role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="user_role_usba_id" property="usbaId" jdbcType="INTEGER" />
+    <result column="user_role_usro_modify_date" property="usroModifyDate" jdbcType="TIMESTAMP" />
+    <result column="user_role_usro_create_date" property="usroCreateDate" jdbcType="TIMESTAMP" />
+    <result column="user_role_usro_status" property="usroStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_role.usro_id as user_role_usro_id, user_role.role_id as user_role_role_id, user_role.usba_id as user_role_usba_id, 
+    user_role.usro_modify_date as user_role_usro_modify_date, user_role.usro_create_date as user_role_usro_create_date, 
+    user_role.usro_status as user_role_usro_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_role user_role
+    where user_role.usro_id = #{usroId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_role
+    where usro_id = #{usroId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.UserRole" >
+    <selectKey resultType="java.lang.Integer" keyProperty="usroId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_role (role_id, usba_id, usro_modify_date, 
+      usro_create_date, usro_status)
+    values (#{roleId,jdbcType=INTEGER}, #{usbaId,jdbcType=INTEGER}, #{usroModifyDate,jdbcType=TIMESTAMP}, 
+      #{usroCreateDate,jdbcType=TIMESTAMP}, #{usroStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.UserRole" >
+    <selectKey resultType="java.lang.Integer" keyProperty="usroId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="usbaId != null" >
+        usba_id,
+      </if>
+      <if test="usroModifyDate != null" >
+        usro_modify_date,
+      </if>
+      <if test="usroCreateDate != null" >
+        usro_create_date,
+      </if>
+      <if test="usroStatus != null" >
+        usro_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="usbaId != null" >
+        #{usbaId,jdbcType=INTEGER},
+      </if>
+      <if test="usroModifyDate != null" >
+        #{usroModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usroCreateDate != null" >
+        #{usroCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usroStatus != null" >
+        #{usroStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.UserRole" >
+    update user_role
+    <set >
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="usbaId != null" >
+        usba_id = #{usbaId,jdbcType=INTEGER},
+      </if>
+      <if test="usroModifyDate != null" >
+        usro_modify_date = #{usroModifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usroCreateDate != null" >
+        usro_create_date = #{usroCreateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usroStatus != null" >
+        usro_status = #{usroStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where usro_id = #{usroId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.UserRole" >
+    update user_role
+    set role_id = #{roleId,jdbcType=INTEGER},
+      usba_id = #{usbaId,jdbcType=INTEGER},
+      usro_modify_date = #{usroModifyDate,jdbcType=TIMESTAMP},
+      usro_create_date = #{usroCreateDate,jdbcType=TIMESTAMP},
+      usro_status = #{usroStatus,jdbcType=TINYINT}
+    where usro_id = #{usroId,jdbcType=INTEGER}
+  </update>
+</mapper>

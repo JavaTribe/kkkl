@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bluedon.cb.common.mapper.GradeMapper" >
+  <resultMap id="BaseResultMap" type="com.bluedon.cb.common.entity.Grade" >
+    <id column="grade_grad_id" property="gradId" jdbcType="INTEGER" />
+    <result column="grade_grad_grade_no" property="gradGradeNo" jdbcType="INTEGER" />
+    <result column="grade_grad_grade_name" property="gradGradeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    grade.grad_id as grade_grad_id, grade.grad_grade_no as grade_grad_grade_no, grade.grad_grade_name as grade_grad_grade_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from grade grade
+    where grade.grad_id = #{gradId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from grade
+    where grad_id = #{gradId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bluedon.cb.common.entity.Grade" >
+    <selectKey resultType="java.lang.Integer" keyProperty="gradId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into grade (grad_grade_no, grad_grade_name)
+    values (#{gradGradeNo,jdbcType=INTEGER}, #{gradGradeName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bluedon.cb.common.entity.Grade" >
+    <selectKey resultType="java.lang.Integer" keyProperty="gradId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gradGradeNo != null" >
+        grad_grade_no,
+      </if>
+      <if test="gradGradeName != null" >
+        grad_grade_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gradGradeNo != null" >
+        #{gradGradeNo,jdbcType=INTEGER},
+      </if>
+      <if test="gradGradeName != null" >
+        #{gradGradeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bluedon.cb.common.entity.Grade" >
+    update grade
+    <set >
+      <if test="gradGradeNo != null" >
+        grad_grade_no = #{gradGradeNo,jdbcType=INTEGER},
+      </if>
+      <if test="gradGradeName != null" >
+        grad_grade_name = #{gradGradeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where grad_id = #{gradId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bluedon.cb.common.entity.Grade" >
+    update grade
+    set grad_grade_no = #{gradGradeNo,jdbcType=INTEGER},
+      grad_grade_name = #{gradGradeName,jdbcType=VARCHAR}
+    where grad_id = #{gradId,jdbcType=INTEGER}
+  </update>
+</mapper>
